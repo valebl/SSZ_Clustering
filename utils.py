@@ -69,12 +69,14 @@ def derive_zones(path_to_file):
                 zones[i][j][k] = float(zones[i][j][k])
     return zones
                 
-def plot_italy(zones):
+def plot_shapes(zones,colour,fill=None):
     j = 0
     for zone in zones:
         x_zone = [zone[i][0] for i in range(len(zone)) if i > 0]
         y_zone = [zone[i][1] for i in range(len(zone)) if i > 0]
-        plt.plot(x_zone, y_zone, 'k', alpha=1, linewidth=0.3)
+        plt.plot(x_zone, y_zone, colour, alpha=1, linewidth=0.3)
+        if fill is not None:
+            plt.fill(x_zone, y_zone, fill, alpha=0.3)
         j += 1
 
 def haversine_np(lon1, lat1, lon2, lat2):
