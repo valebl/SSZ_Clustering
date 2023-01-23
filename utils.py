@@ -46,6 +46,29 @@ def gutemberg_richter(magnitude, year):
 
     return GRfit
 
+def derive_zones(path_to_file)
+    zones = []
+    with open(path_to_file) as f:
+        lines = f.read()
+        for zone in lines.split(';'):
+            zones.append(zone)
+    for i in range(len(zones)):
+        zones[i] = zones[i].split('\n')
+        for j in range(len(zones[i])):
+            zones[i][j] = zones[i][j].split(',')
+        if [''] in zones[i]:
+            zones[i].remove([''])
+    for i in range(len(zones)):
+        for j in range(len(zones[i])):
+            if '' in zones[i][j]:
+                zones[i][j].remove('')
+            if zones[i][j] == []:
+                del zones[i][j]
+                continue
+            for k in range(len(zones[i][j])):
+                zones[i][j][k] = float(zones[i][j][k])
+    return zones
+                
 def plot_italy(zones):
     j = 0
     for zone in zones:
