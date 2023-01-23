@@ -46,7 +46,7 @@ def gutemberg_richter(magnitude, year):
 
     return GRfit
 
-def derive_zones(path_to_file)
+def derive_zones(path_to_file):
     zones = []
     with open(path_to_file) as f:
         lines = f.read()
