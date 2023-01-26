@@ -14,8 +14,8 @@ def gutemberg_richter(magnitude, year):
     index = [i for i in range(len(year)) if year[i] > ThreshYear[0]]
     magnitude = magnitude[index]
 
-    Mmintoshow = min(magnitude)
-    Mmaxtoshow = max(magnitude)
+    # Mmintoshow = min(magnitude)
+    # Mmaxtoshow = max(magnitude)
 
     N0 = np.zeros(len(Minterval0)-1)
     for i in range(len(Minterval0)-1):
@@ -98,7 +98,6 @@ def haversine_np(lon1, lat1, lon2, lat2):
     km = 6367 * c
     return km
 
-
 def distance_np(x1, y1, x2, y2):
     
     x2 = np.array(x2)
@@ -111,4 +110,49 @@ def distance_np(x1, y1, x2, y2):
 
     return d
 
+def is_leap_year(year):
+    """Determine whether a year is a leap year."""
+    leap = False
+    if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0) or (year < 1600 and year % 100 == 0):
+        leap = True
+    return leap
+
+def date_number(year, month, day, hour, minute, second):
+    """Convert date and time to serial date number"""
+
+    months_days = [31 if i not in [3, 5, 8, 10] else 30 for i in range(12)]
+    months_days[1] = 29 if is_leap_year(year) else 28
+
+    max_day = months_days[month-1]
+
+    max_minute = 60
+    max_second = 60
+
+    if month not in range(1,13):
+        raise Exception("month should be in (1,12)")
+    
+    if day not in range(1,max_day+1):
+        raise Exception(f"day should be in (1,{max_day})")
+    
+    if hour not in range(25):
+        raise Exception("hour should be in (0,24)")
+    
+    if minute not in range(61):
+        raise Exception("minute should be in (0,60)")
+    
+    if second not in range(61):
+        raise Exception("second should be in (0,60)")
+
+    past_years_days = 0
+    leap_count = 0
+    for y in range(year):
+        if is_leap_year(y):
+            past_years_days += 366
+            leap_count += 1
+        else:
+            past_years_days += 365
+    
+    past_months_days = sum(months_days[:month-1])
+
+    return past_years_days + past_months_days + (day-1) + (hour * 60 * 60 + minute * 60 + second) / (24 * 60 * 60)
 
